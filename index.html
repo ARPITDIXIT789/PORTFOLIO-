@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aryan | 3D Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05060b;
+      --glass: rgba(255, 255, 255, 0.07);
+      --accent: #6cf0ff;
+      --accent-2: #cfa3ff;
+      --text: #e8ecf1;
+      --muted: #9db3c8;
+      --card-border: rgba(255, 255, 255, 0.12);
+      --glow: 0 20px 60px rgba(108, 240, 255, 0.25);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 15% 20%, rgba(108,240,255,0.18), transparent 25%),
+                  radial-gradient(circle at 80% 0%, rgba(207,163,255,0.18), transparent 30%),
+                  var(--bg);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    header {
+      position: relative;
+      padding: 48px 7vw 120px;
+      overflow: hidden;
+    }
+    .halo {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(750px 650px at 75% 20%, rgba(108, 240, 255, 0.16), transparent),
+                  radial-gradient(600px 600px at 20% 10%, rgba(207, 163, 255, 0.16), transparent);
+      filter: blur(2px);
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .pill {
+      border: 1px solid var(--card-border);
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--glass);
+      backdrop-filter: blur(14px);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 6vw, 64px);
+      margin: 0 0 18px;
+      line-height: 1.05;
+    }
+    .hero p { color: var(--muted); margin: 0 0 22px; font-size: 18px; }
+    .cta {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: linear-gradient(120deg, rgba(108,240,255,0.18), rgba(207,163,255,0.16));
+      box-shadow: var(--glow);
+      color: var(--bg);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 24px 80px rgba(108, 240, 255, 0.35); }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .stat {
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+    }
+    .stat strong { font-size: 26px; display: block; color: var(--accent); }
+    .gallery {
+      position: relative;
+      transform-style: preserve-3d;
+      perspective: 1400px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      transform: rotateY(-6deg) rotateX(4deg);
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+      cursor: pointer;
+    }
+    .card:hover { transform: rotateY(0deg) rotateX(0deg) translateY(-6px); border-color: rgba(108,240,255,0.35); box-shadow: var(--glow); }
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.05);
+    }
+    .card-body { padding: 16px 16px 18px; }
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(108,240,255,0.14);
+      color: var(--bg);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+    .skills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .chip {
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--card-border);
+      color: var(--muted);
+    }
+    .timeline {
+      margin-top: 24px;
+      border-left: 2px solid rgba(108,240,255,0.3);
+      padding-left: 20px;
+      display: grid;
+      gap: 18px;
+    }
+    .event {
+      position: relative;
+    }
+    .event::before {
+      content: "";
+      position: absolute;
+      left: -30px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #6cf0ff, #8e6cff);
+      box-shadow: 0 0 18px rgba(108,240,255,0.7);
+    }
+    footer {
+      padding: 64px 7vw 70px;
+      border-top: 1px solid var(--card-border);
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+    }
+    .floating-orb {
+      position: fixed;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(108,240,255,0.6), rgba(108,240,255,0));
+      filter: blur(22px);
+      opacity: 0.65;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      inset: auto auto 10% 60%;
+      animation: float 9s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translate3d(-20px, 0, 0) scale(1); }
+      50% { transform: translate3d(20px, -20px, 0) scale(1.08); }
+      100% { transform: translate3d(-20px, 0, 0) scale(1); }
+    }
+    @media (max-width: 780px) {
+      header { padding: 36px 6vw 96px; }
+      .hero { margin-top: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-orb"></div>
+  <header>
+    <div class="halo"></div>
+    <nav>
+      <div class="logo">ARYAN / BCA</div>
+      <div class="pill">CJMU • Batch 2024</div>
+    </nav>
+    <div class="hero">
+      <div>
+        <div class="pill">3D Portfolio</div>
+        <h1>Building immersive web experiences for the tech future.</h1>
+        <p>I’m Aryan, a BCA student at Chhatrapati Shahu Ji Maharaj University (CJMU) who blends modern JavaScript, 3D motion, and clean design to craft premium interfaces.</p>
+        <button class="cta" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
+          View Selected Work →
+        </button>
+        <div class="stats">
+          <div class="stat"><strong>15+</strong>Front-end micro-interactions shipped</div>
+          <div class="stat"><strong>08</strong>Hackathon prototypes</div>
+          <div class="stat"><strong>03</strong>3D web experiments</div>
+        </div>
+      </div>
+      <div class="gallery">
+        <div class="card" data-tilt>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/C.S.J.M._University.jpg/640px-C.S.J.M._University.jpg" alt="CJMU campus">
+          <div class="card-body">
+            <span class="tag">Campus • CJMU</span>
+            <div class="skills">
+              <span class="chip">Kanpur</span>
+              <span class="chip">Collab spaces</span>
+              <span class="chip">Tech fests</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-tilt>
+          <img src="https://media.istockphoto.com/id/1014231368/photo/creative-young-people-working-on-computer.jpg?s=640x426&k=20&c=qr3SrRDBkD4JOJmDC4pjXfW5n_oGYi5Y5dUv-HxarFM=" alt="Student coding">
+          <div class="card-body">
+            <span class="tag">Lab Energy</span>
+            <p style="margin: 8px 0 0; color: var(--muted);">Late-night sprints, peer code reviews, and design critiques keep the craft sharp.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding: 0 7vw 80px;">
+    <section id="projects" style="margin-bottom: 60px;">
+      <div class="pill" style="margin-bottom: 16px;">Featured</div>
+      <h2 style="margin: 0 0 18px; font-size: 32px;">Selected Builds</h2>
+      <p style="margin: 0 0 28px; color: var(--muted); max-width: 640px;">
+        Motion-led, performant, and responsive across devices. Each project ships with strong accessibility and real-time interactions.
+      </p>
+      <div class="gallery">
+        <div class="card" data-tilt>
+          <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1400&q=80" alt="3D city UI">
+          <div class="card-body">
+            <span class="tag">WebGL Dashboard</span>
+            <p style="margin: 8px 0 12px; color: var(--muted);">Three.js cityscape with live data overlays for an IoT smart campus.</p>
+            <div class="skills">
+              <span class="chip">Three.js</span><span class="chip">GSAP</span><span class="chip">WebSockets</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-tilt>
+          <img src="https://images.unsplash.com/photo-1532074205216-d0e1f4b87368?auto=format&fit=crop&w=1400&q=80" alt="VR showcase">
+          <div class="card-body">
+            <span class="tag">Immersive Story</span>
+            <p style="margin: 8px 0 12px; color: var(--muted);">Portfolio walkthrough with spatial audio cues and parallax depth.</p>
+            <div class="skills">
+              <span class="chip">Three.js</span><span class="chip">Audio</span><span class="chip">ARIA</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-tilt>
+          <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1400&q=80" alt="Code editor UI">
+          <div class="card-body">
+            <span class="tag">UI Systems</span>
+            <p style="margin: 8px 0 12px; color: var(--muted);">Design system starter for campus clubs—components, tokens, and motion presets.</p>
+            <div class="skills">
+              <span class="chip">React</span><span class="chip">Framer Motion</span><span class="chip">Figma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 60px;">
+      <div class="pill" style="margin-bottom: 16px;">Background</div>
+      <h2 style="margin: 0 0 18px; font-size: 32px;">Experience & Education</h2>
+      <div class="timeline">
+        <div class="event">
+          <h3 style="margin: 0 0 4px;">BCA • Chhatrapati Shahu Ji Maharaj University</h3>
+          <p style="margin: 0; color: var(--muted);">2024 – Present · Kanpur · Focus: web technologies, cloud fundamentals, and UI engineering.</p>
+        </div>
+        <div class="event">
+          <h3 style="margin: 0 0 4px;">Frontend Intern • SaaS Studio</h3>
+          <p style="margin: 0; color: var(--muted);">Built marketing microsites with high-performance animations (<40ms interaction delay).</p>
+        </div>
+        <div class="event">
+          <h3 style="margin: 0 0 4px;">Hackathon Lead • Campus Dev Club</h3>
+          <p style="margin: 0; color: var(--muted);">Mentored 20+ peers on React patterns, accessibility, and motion best practices.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-bottom: 60px;">
+      <div class="pill" style="margin-bottom: 16px;">Stack</div>
+      <h2 style="margin: 0 0 18px; font-size: 32px;">Tools I Move Fast With</h2>
+      <div class="skills">
+        <span class="chip">JavaScript (ES2023)</span><span class="chip">TypeScript</span><span class="chip">React</span>
+        <span class="chip">Three.js</span><span class="chip">Vite</span><span class="chip">GSAP</span>
+        <span class="chip">Tailwind tokens</span><span class="chip">Figma</span><span class="chip">Notion</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <h2 style="margin: 0 0 12px; font-size: 28px;">Let’s build something bold.</h2>
+    <p style="margin: 0 0 18px; color: var(--muted); max-width: 560px;">Open to internships, freelance collabs, or hackathon teams where motion and storytelling matter.</p>
+    <div class="pill">Email: aryan.cjmu@uni.edu • Discord: aryan.dev</div>
+  </footer>
+
+  <script>
+    // Lightweight tilt for all cards
+    document.querySelectorAll("[data-tilt]").forEach(card => {
+      const strength = 12;
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+        card.style.transform = `rotateY(${x * strength}deg) rotateX(${-y * strength}deg) translateY(-4px)`;
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "rotateY(-6deg) rotateX(4deg)";
+      });
+    });
+  </script>
+</body>
+</html>
